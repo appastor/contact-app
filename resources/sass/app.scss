@@ -1,0 +1,17 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+// / Custom styles
+.nav-link {
+    &.active {
+        font-weight: bold;
+        border-left: 5px solid #007bff;
+        padding-left: 10px;
+    }
+}
