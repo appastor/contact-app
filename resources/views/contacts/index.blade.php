@@ -42,6 +42,25 @@
                                 </td>
                             </tr>
                             @endforeach
+                            @foreach($trashed as $contact)
+                            <tr class="align-middle">
+                                <td>
+                                    @if ($contact->avatar)
+                                        <img src="{{ asset('storage/' . $contact->avatar) }}" alt="{{ $contact->name }}" class="img-fluid" style="width: 100%">
+                                    @endif
+                                </td>
+                                <td>{{ $contact->name }}</td>
+                                <td>{{ $contact->email }}</td>
+                                <td>{{ $contact->contact_number }}</td>
+                                <td>{{ $contact->address }}</td>
+                                <td>
+                                    <form action="{{ route('contacts.restore', $contact->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Restore</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

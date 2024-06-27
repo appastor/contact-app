@@ -11,7 +11,8 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Contact::all();
-        return view('contacts.index', compact('contacts'));
+        $trashed = Contact::onlyTrashed()->get();
+        return view('contacts.index', compact(['contacts', 'trashed']));
     }
 
     public function create()
@@ -77,6 +78,14 @@ class ContactController extends Controller
     public function destroy(Contact $contact)
     {
         $contact->delete();
+        return redirect()->route('contacts.index');
+    }
+
+    public function restore($id)
+    {
+        $contact = Contact::withTrashed()->findOrFail($id);
+        $contact->restore();
+
         return redirect()->route('contacts.index');
     }
 }
