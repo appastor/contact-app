@@ -29,6 +29,10 @@ Route::middleware(['auth'])->group(function () {
     Route::put('notes/{note}', [NoteController::class, 'update'])->name('notes.update');
 });
 
+Route::get('/alerts', function () {
+    return view('alerts');
+})->name('alerts');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

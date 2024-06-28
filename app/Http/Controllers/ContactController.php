@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Events\ContactCreated;
+use App\Events\ContactUpdated;
+use App\Events\ContactDeleted;
 use App\Models\Contact;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
@@ -39,6 +42,8 @@ class ContactController extends Controller
 
         $contact->save();
 
+        event(new ContactCreated($contact));
+
         return redirect()->route('contacts.index');
     }
 
@@ -72,12 +77,17 @@ class ContactController extends Controller
 
         $contact->update($validated_data);
 
+        event(new ContactUpdated($contact));
+
         return redirect()->route('contacts.index')->with('success', 'Contact updated successfully.');
     }
 
     public function destroy(Contact $contact)
     {
         $contact->delete();
+
+        event(new ContactDeleted($contact));
+        
         return redirect()->route('contacts.index');
     }
 
